@@ -1,8 +1,11 @@
 package com.example.redditapp
 
+import Json4KotlinBase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewGroup
+import com.example.redditapp.data.RetrofitClientInstance
+import com.squareup.okhttp.Call
+import com.squareup.okhttp.Callback
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +17,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-        RecycleView recycleview = new RecycleView();
+    var service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService::class.java){
+        var Json4KotlinBase: Call
+        var call = service.getAllPhotos()
+        call.enqueue(Callback<Json4KotlinBase>())
+    }
+
+
 
 
 }
