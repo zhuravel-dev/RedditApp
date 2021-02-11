@@ -1,10 +1,10 @@
 package com.example.redditapp
 
-import Json4KotlinBase
+import com.example.redditapp.models.Json4Kotlin_Base
 import retrofit2.Call
 import retrofit2.http.GET
 
 interface Interface {
-    @get:GET("/response")
-    val content: Call<Json4KotlinBase>
+    @GET("top.json?limit=10")
+    fun getContent(): Call<Json4Kotlin_Base>
 }

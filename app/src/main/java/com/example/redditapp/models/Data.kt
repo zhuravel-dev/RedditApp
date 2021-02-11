@@ -1,3 +1,6 @@
+package com.example.redditapp.models
+
+import com.example.redditapp.models.child.ChildDetails
 import com.google.gson.annotations.SerializedName
 
 /*
@@ -12,9 +15,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class ResizedIcons (
+data class Data (
 
-	@SerializedName("url") val url : String,
-	@SerializedName("width") val width : Int,
-	@SerializedName("height") val height : Int
+	@SerializedName("modhash") val modhash : String,
+	@SerializedName("dist") val dist : Int,
+	@SerializedName("children") val children : List<ChildDetails>,
+	@SerializedName("after") val after : String,
+	@SerializedName("before") val before : String
 )
