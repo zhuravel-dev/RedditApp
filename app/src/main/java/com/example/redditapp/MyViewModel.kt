@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.redditapp.data.RetrofitClientInstance
 import com.example.redditapp.models.Json4Kotlin_Base
+import com.example.redditapp.models.child.ChildDetails
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,8 +15,11 @@ class MyViewModel: ViewModel() {
     private val _showProgress = MutableLiveData<Boolean>()
     val showProgress: LiveData<Boolean> = _showProgress
 
-    private val _setData = MutableLiveData<Json4Kotlin_Base>()
-    val setData: LiveData<Json4Kotlin_Base> = _setData
+    private val _setData = MutableLiveData<List<ChildDetails>>()
+    val setData: LiveData<List<ChildDetails>> = _setData
+
+    private val _after = MutableLiveData<String>()
+    val after: LiveData<String> = _after
 
 
     fun getAllData(limit: Int, after: String? = null) {
@@ -28,8 +32,12 @@ class MyViewModel: ViewModel() {
                 response: Response<Json4Kotlin_Base>
             ) {
                 if (response.isSuccessful) {
-                    val body = response.body()
-                    if (body != null) _setData.postValue(body)
+                    val body: Json4Kotlin_Base? = response.body()
+                    if (body != null) {
+                        val children = body.data.children
+                        _after.postValue(body.data.after)
+                        _setData.postValue(children)
+                    }
                 }
                 _showProgress.postValue(false)
             }

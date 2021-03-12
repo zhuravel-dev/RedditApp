@@ -1,6 +1,9 @@
 package com.example.redditapp
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
@@ -10,6 +13,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +41,6 @@ class MainActivity : AppCompatActivity(), DetailsClickListener {
     private var after: String? = null
     private var lastFetchedPosition: Int = 0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,11 +58,11 @@ class MainActivity : AppCompatActivity(), DetailsClickListener {
         viewModel?.showProgress?.observe(this) { show ->
             progressBar?.isVisible1 = show
         }
-
         viewModel?.setData?.observe(this) { data ->
-            after = data.data.after
             adapter.setData(data)
         }
+        viewModel?.after?.observe(this) { t -> this@MainActivity.after = t }
+
     }
 
 

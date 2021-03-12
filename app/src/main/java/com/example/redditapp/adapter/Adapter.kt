@@ -14,8 +14,8 @@ class Adapter : RecyclerView.Adapter<CustomViewHolder>() {
     private var redditPostsList : MutableList<ChildDetails> = mutableListOf()
     var clickLictener: DetailsClickListener? = null
 
-    fun setData(response: Json4Kotlin_Base) {
-        redditPostsList.addAll(response.data.children)
+    fun setData(response: List<ChildDetails>) {
+        redditPostsList.addAll(response)
         notifyDataSetChanged()
     }
 
